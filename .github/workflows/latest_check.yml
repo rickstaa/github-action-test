@@ -52,13 +52,13 @@ jobs:
           LATEST_TAG=$(git tag -l "v*" --sort=-creatordate | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -n 1)
           echo "current_tag=$CURRENT_TAG" >> $GITHUB_ENV
           echo "latest_tag=$LATEST_TAG" >> $GITHUB_ENV
-          echo "$CURRENT_TAG"
-          echo "$LATEST_TAG"
+          echo "Current Tag: $CURRENT_TAG"
+          echo "Latest Tag: $LATEST_TAG"
 
-      - name: Get current branch
-        id: get-branch
+      - name: Get base branch
+        id: get-base-branch
         run: |
           BASE_BRANCH=${{ github.event.base_ref }}
           BASE_BRANCH=${BASE_BRANCH#refs/heads/}
           echo "base_branch=$BASE_BRANCH" >> $GITHUB_ENV
-          echo "$BASE_BRANCH"
+          echo "Base Branch: $BASE_BRANCH"
