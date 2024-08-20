@@ -12,26 +12,26 @@ jobs:
 
   steps:
     - name: Check out code
-        uses: actions/checkout@v4.1.7
-        with:
-          fetch-depth: 0
-          # Check https://github.com/livepeer/go-livepeer/pull/1891
-          # for ref value discussion
-          ref: ${{ github.event.pull_request.head.sha }}
+      uses: actions/checkout@v4.1.7
+      with:
+        fetch-depth: 0
+        # Check https://github.com/livepeer/go-livepeer/pull/1891
+        # for ref value discussion
+        ref: ${{ github.event.pull_request.head.sha }}
 
     - name: print GitHub context
-        run: echo "$GITHUB_CONTEXT"
+      run: echo "$GITHUB_CONTEXT"
 
     - name: Determine latest and current tags
-        id: get-tag-info
-        if: startsWith(github.ref, 'refs/tags/')
-        run: |
-          git fetch --tags
-          CURRENT_TAG=${GITHUB_REF#refs/tags/}
-          LATEST_TAG=$(git tag -l "v*" --sort=-creatordate | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -n 1)
-          echo "current_tag=$CURRENT_TAG" >> $GITHUB_ENV
-          echo "latest_tag=$LATEST_TAG" >> $GITHUB_ENV
+      id: get-tag-info
+      if: startsWith(github.ref, 'refs/tags/')
+      run: |
+        git fetch --tags
+        CURRENT_TAG=${GITHUB_REF#refs/tags/}
+        LATEST_TAG=$(git tag -l "v*" --sort=-creatordate | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -n 1)
+        echo "current_tag=$CURRENT_TAG" >> $GITHUB_ENV
+        echo "latest_tag=$LATEST_TAG" >> $GITHUB_ENV
 
     - name: Get current branch
-        id: get-branch
-        run: echo "branch=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      id: get-branch
+      run: echo "branch=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
