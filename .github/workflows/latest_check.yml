@@ -58,5 +58,7 @@ jobs:
       - name: Get current branch
         id: get-branch
         run: |
-          echo "base_branch=${{ github.event.base_ref }}" >> $GITHUB_ENV
-          echo "${{ github.event.base_ref }}"
+          BASE_BRANCH=${{ github.event.base_ref }}
+          BASE_BRANCH=${BASE_BRANCH#refs/heads/}
+          echo "base_branch=$BASE_BRANCH" >> $GITHUB_ENV
+          echo "$BASE_BRANCH"
