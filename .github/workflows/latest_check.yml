@@ -62,3 +62,7 @@ jobs:
           BASE_BRANCH=${BASE_BRANCH#refs/heads/}
           echo "base_branch=$BASE_BRANCH" >> $GITHUB_ENV
           echo "Base Branch: $BASE_BRANCH"
+
+      - name: Only run on latest tag
+        if: ${{ steps.get-tag-info.outputs.current_tag == steps.get-tag-info.outputs.latest_tag }}
+        run: echo "Running on latest tag"
