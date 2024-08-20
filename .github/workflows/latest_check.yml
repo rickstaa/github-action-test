@@ -54,6 +54,8 @@ jobs:
           echo "latest_tag=$LATEST_TAG" >> $GITHUB_ENV
           echo "Current Tag: $CURRENT_TAG"
           echo "Latest Tag: $LATEST_TAG"
+          echo "Ref name: $GITHUB_REF_NAME"
+          echo "Ref: $GITHUB_REF"
 
       - name: Get base branch
         id: get-base-branch
