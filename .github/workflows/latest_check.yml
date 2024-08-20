@@ -19,8 +19,8 @@ jobs:
           # for ref value discussion
           ref: ${{ github.event.pull_request.head.sha }}
 
-      - name: Build binaries
-        id: build-tags
+      - name: Get tag info
+        id: tags-info
         run: |
           ./ci_env.sh
 
@@ -49,19 +49,14 @@ jobs:
           MATRIX_CONTEXT: ${{ toJson(matrix) }}
         run: echo "$MATRIX_CONTEXT"
 
-      - name: Get base branch
-        id: get-base-branch
+      - name: Display tags and branch info
         run: |
-          BASE_BRANCH=${{ github.event.base_ref }}
-          BASE_BRANCH=${BASE_BRANCH#refs/heads/}
-          echo "base_branch=$BASE_BRANCH" >> $GITHUB_ENV
-          echo "Base Branch: $BASE_BRANCH"
-
-      - name: print tag info
-        id: get-tag-info
-        run: |
-          echo ${{ steps.build-tags.outputs.latest_tag }}
+          echo "Latest tag: ${{ steps.tags-info.outputs.latest_tag }}"
+          echo "Current tag: ${{ github.ref }}"
+          echo "Current branch: ${{ github.event.base_ref }}"
 
       - name: Only run on latest tag
-        if: ${{ github.ref == format('refs/tags/{0}', steps.build-tags.outputs.latest_tag) }}
-        run: echo "Running on latest tag"
+        if: ${{ github.ref == format('refs/tags/{0}', steps.tags-info.outputs.latest_tag) }}
+        run: |
+          echo "Running on latest tag"
+
