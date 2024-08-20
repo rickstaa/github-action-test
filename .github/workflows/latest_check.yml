@@ -7,9 +7,10 @@ on:
       - "v*"
 
 jobs:
-  check:
-    runs-on: ubuntu-latest
+  check-latest:
+    runs-on: ubuntu-20.04
 
+  steps:
     - name: Check out code
         uses: actions/checkout@v4.1.7
         with:
